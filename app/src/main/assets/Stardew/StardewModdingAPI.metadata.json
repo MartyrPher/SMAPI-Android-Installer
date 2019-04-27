@@ -1,0 +1,405 @@
+{
+  /**
+   * Metadata about some SMAPI mods used in compatibility, update, and dependency checks. This
+   * field shouldn't be edited by players in most cases.
+   *
+   * Standard fields
+   * ===============
+   * The predefined fields are documented below (only 'ID' is required). Each entry's key is the
+   * default display name for the mod if one isn't available (e.g. in dependency checks).
+   *
+   *   - ID: the mod's latest unique ID (if any).
+   *
+   *   - FormerIDs: uniquely identifies the mod across multiple versions, and supports matching
+   *     other fields if no ID was specified. This doesn't include the latest ID, if any. Multiple
+   *     variants can be separated with '|'.
+   *
+   *   - MapLocalVersions and MapRemoteVersions correct local manifest versions and remote versions
+   *     during update checks. For example, if the API returns version '1.1-1078' where '1078' is
+   *     intended to be a build number, MapRemoteVersions can map it to '1.1' when comparing to the
+   *     mod's current version. This is only meant to support legacy mods with injected update keys.
+   *
+   * Versioned metadata
+   * ==================
+   * Each record can also specify extra metadata using the field keys below.
+   *
+   * Each key consists of a field name prefixed with any combination of version range and 'Default',
+   * separated by pipes (whitespace trimmed). For example, 'UpdateKey' will always override,
+   * 'Default | UpdateKey' will only override if the mod has no update keys, and
+   * '~1.1 | Default | Name' will do the same up to version 1.1.
+   *
+   * The version format is 'min~max' (where either side can be blank for unbounded), or a single
+   * version number.
+   *
+   * These are the valid field names:
+   *
+   *   - UpdateKey: the update key to set in the mod's manifest. This is used to enable update
+   *     checks for older mods that haven't been updated to use it yet.
+   *
+   *   - Status: overrides compatibility checks. The possible values are Obsolete (SMAPI won't load
+   *     it because the mod should no longer be used), AssumeBroken (SMAPI won't load it because
+   *     the specified version isn't compatible), or AssumeCompatible (SMAPI will try to load it
+   *     even if it detects incompatible code).
+   *
+   *     Note that this shouldn't be set to 'AssumeBroken' if SMAPI can detect the incompatibility
+   *     automatically, since that hides the details from trace logs.
+   *
+   *   - StatusReasonPhrase: a message to show to the player explaining why the mod can't be loaded
+   *     (if applicable). If blank, will default to a generic not-compatible message.
+   *
+   *   - AlternativeUrl: a URL where the player can find an unofficial update or alternative if the
+   *     mod is no longer compatible.
+   */
+  "ModData": {
+    /*********
+    ** Content packs
+    *********/
+    "Canon-Friendly Dialogue Expansion": {
+      "ID": "gizzymo.canonfriendlyexpansion",
+      "~1.1.1 | Status": "AssumeBroken" // causes a save crash on certain dates
+    },
+
+    "Everytime Submarine": {
+      "ID": "MustafaDemirel.EverytimeSubmarine",
+      "~1.0.0 | Status": "AssumeBroken" // breaks player saves if their beach bridge is fixed
+    },
+
+
+    /*********
+    ** Mods
+    *********/
+    "Adjust Artisan Prices": {
+      "ID": "ThatNorthernMonkey.AdjustArtisanPrices",
+      "FormerIDs": "1e36d4ca-c7ef-4dfb-9927-d27a6c3c8bdc", // changed in 0.0.2-pathoschild-update
+      "MapRemoteVersions": { "0.01": "0.0.1" }
+    },
+
+    "Almighty Farming Tool": {
+      "ID": "439",
+      "MapRemoteVersions": {
+        "1.21": "1.2.1",
+        "1.22-unofficial.3.mizzion": "1.2.2-unofficial.3.mizzion"
+      }
+    },
+
+    "Animal Mood Fix": {
+      "ID": "GPeters-AnimalMoodFix",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "the animal mood bugs were fixed in Stardew Valley 1.2."
+    },
+
+    "Arcade Pong": {
+      "ID": "Platonymous.ArcadePong",
+      "~1.0.2 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
+    },
+
+    "Automated Doors": {
+      "ID": "azah.automated-doors",
+      "FormerIDs": "1abcfa07-2cf4-4dc3-a6e9-6068b642112b", // changed in 1.4.1
+      "Default | UpdateKey": "GitHub:azah/AutomatedDoors" // added in 1.4.2
+    },
+
+    "Basic Sprinklers Improved": {
+      "ID": "lrsk_sdvm_bsi.0117171308",
+      "MapRemoteVersions": { "1.0.2": "1.0.1-release" } // manifest not updated
+    },
+
+    "Better Shipping Box": {
+      "ID": "Kithio:BetterShippingBox",
+      "MapLocalVersions": { "1.0.1": "1.0.2" }
+    },
+
+    "Birthday Mail": {
+      "ID": "KathrynHazuka.BirthdayMail",
+      "FormerIDs": "005e02dc-d900-425c-9c68-1ff55c5a295d", // changed in 1.2.3-pathoschild-update
+      "MapRemoteVersions": { "1.3.1": "1.3" } // manifest not updated
+    },
+
+    "BJS Night Sounds": {
+      "ID": "BunnyJumps.BJSNightSounds",
+      "~1.0.0 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+    },
+
+    "Casks Anywhere": {
+      "ID": "CasksAnywhere",
+      "MapLocalVersions": { "1.1-alpha": "1.1" }
+    },
+
+    "Chefs Closet": {
+      "ID": "Duder.ChefsCloset",
+      "MapLocalVersions": { "1.3-1": "1.3" }
+    },
+
+    "Chest Pooling": {
+      "ID": "mralbobo.ChestPooling",
+      "Default | UpdateKey": "GitHub:mralbobo/stardew-chest-pooling"
+    },
+
+    "Cobalt": {
+      "ID": "spacechase0.Cobalt",
+      "MapRemoteVersions": { "1.1.3": "1.1.2" } // not updated in manifest
+    },
+
+    "Colored Chests": {
+      "ID": "4befde5c-731c-4853-8e4b-c5cdf946805f",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "colored chests were added in Stardew Valley 1.1."
+    },
+
+    "Configurable Machines": {
+      "ID": "21da6619-dc03-4660-9794-8e5b498f5b97",
+      "MapLocalVersions": { "1.2-beta": "1.2" }
+    },
+
+    "Crafting Counter": {
+      "ID": "lolpcgaming.CraftingCounter",
+      "MapRemoteVersions": { "1.1": "1.0" } // not updated in manifest
+    },
+
+    "Custom Farming Automate Bridge": {
+      "ID": "Platonymous.CFAutomate",
+      "~1.0.1 | Status": "AssumeBroken", // no longer compatible with Automate
+      "~1.0.1 | AlternativeUrl": "https://www.nexusmods.com/stardewvalley/mods/991"
+    },
+
+    "Customizable Cart Redux": {
+      "ID": "KoihimeNakamura.CCR",
+      "MapLocalVersions": { "1.1-20170917": "1.1" }
+    },
+
+    "Custom Linens": {
+      "ID": "Mevima.CustomLinens",
+      "MapRemoteVersions": { "1.1": "1.0" } // manifest not updated
+    },
+
+    "Custom Shirts": {
+      "ID": "Platonymous.CustomShirts",
+      "Default | UpdateKey": "Nexus:2416" // keep for dependencies
+    },
+
+    "Dynamic Horses": {
+      "ID": "Bpendragon-DynamicHorses",
+      "MapRemoteVersions": { "1.2": "1.1-release" } // manifest not updated
+    },
+
+    "Dynamic Machines": {
+      "ID": "DynamicMachines",
+      "MapLocalVersions": { "1.1": "1.1.1" }
+    },
+
+    "Enemy Health Bars": {
+      "ID": "Speeder.HealthBars",
+      "FormerIDs": "SPDHealthBar" // changed in 1.7.1-pathoschild-update
+    },
+
+    "Fall 28 Snow Day": {
+      "ID": "Omegasis.Fall28SnowDay",
+      "~1.4.1  | Status": "AssumeBroken" // broke in SMAPI 2.0, and update for SMAPI 2.0 doesn't do anything
+    },
+
+    "Fishing Adjust": {
+      "ID": "shuaiz.FishingAdjustMod",
+      "~2.0.1 | Status": "AssumeBroken" // Method not found: 'Void Harmony.HarmonyInstance.Patch(System.Reflection.MethodBase, Harmony.HarmonyMethod, Harmony.HarmonyMethod, Harmony.HarmonyMethod)'
+    },
+
+    "Fishing Automaton": {
+      "ID": "Drynwynn.FishingAutomaton",
+      "~1.1 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+    },
+
+    "Fix Scythe Exp": {
+      "ID": "bcmpinc.FixScytheExp",
+      "~0.3 | Status": "AssumeBroken" // broke in 1.3: Exception from HarmonyInstance "bcmpinc.FixScytheExp" [...] Bad label content in ILGenerator.
+    },
+
+    "Gate Opener": {
+      "ID": "mralbobo.GateOpener",
+      "Default | UpdateKey": "GitHub:mralbobo/stardew-gate-opener"
+    },
+
+    "Grass Growth": {
+      "ID": "bcmpinc.GrassGrowth",
+      "~0.3 | Status": "AssumeBroken" // broke in 1.3.29 (runtime errors: System.IndexOutOfRangeException: Could not find instruction sequence)
+    },
+
+    "Hunger Mod (skn)": {
+      "ID": "skn.HungerMod",
+      "MapRemoteVersions": { "1.2.1": "1.0" } // manifest not updated
+    },
+
+    "Idle Pause": {
+      "ID": "Veleek.IdlePause",
+      "MapRemoteVersions": { "1.2": "1.1" } // manifest not updated
+    },
+
+    "Item Auto Stacker": {
+      "ID": "cat.autostacker",
+      "MapRemoteVersions": { "1.0.1": "1.0" } // manifest not updated
+    },
+
+    "Modder Serialization Utility": {
+      "ID": "SerializerUtils-0-1",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "it's no longer maintained or used."
+    },
+
+    "More Rain": {
+      "ID": "Omegasis.MoreRain",
+      "~1.4    | Status": "AssumeBroken" // broke in SMAPI 2.0
+    },
+
+    "More Silo Storage": {
+      "ID": "OrneryWalrus.MoreSiloStorage",
+      "~1.0.1 | Status": "AssumeBroken" // broke in SDV 1.3
+    },
+
+    "Move Faster": {
+      "ID": "shuaiz.MoveFasterMod",
+      "~1.0.1   | Status": "AssumeBroken" // doesn't do anything as of SDV 1.2.33 (bad Harmony patch?)
+    },
+
+    "MTN": {
+      "ID": "SgtPickles.MTN",
+      "~1.2.5 | Status": "AssumeBroken" // replaces Game1.multiplayer, which breaks SMAPI's multiplayer API.
+    },
+
+    "Multiple Sprites and Portraits On Rotation (File Loading)": {
+      "ID": "FileLoading",
+      "MapLocalVersions": { "1.1": "1.12" }
+    },
+
+    "Night Owl": {
+      "ID": "Omegasis.NightOwl",
+      "MapLocalVersions": { "2.1": "1.3" } // 1.3 had wrong version in manifest
+    },
+
+    "No Added Flying Mine Monsters": {
+      "ID": "Drynwynn.NoAddedFlyingMineMonsters",
+      "~1.1 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+    },
+
+    "No Debug Mode": {
+      "ID": "NoDebugMode",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "debug mode was removed in SMAPI 1.0."
+    },
+
+    "OmniFarm": {
+      "ID": "PhthaloBlue.OmniFarm",
+      "FormerIDs": "BlueMod_OmniFarm", // changed in 2.0.2-pathoschild-update
+      "Default | UpdateKey": "GitHub:lambui/StardewValleyMod_OmniFarm"
+    },
+
+    "PyTK - Platonymous Toolkit": {
+      "ID": "Platonymous.Toolkit",
+      "Default | UpdateKey": "Nexus:1726"
+    },
+
+    "Point-and-Plant": {
+      "ID": "jwdred.PointAndPlant",
+      "MapRemoteVersions": { "1.0.3": "1.0.2" } // manifest not updated
+    },
+
+    "Prairie King Made Easy": {
+      "ID": "Mucchan.PrairieKingMadeEasy",
+      "~1.0    | Status": "AssumeBroken" // broke in SDV 1.2
+    },
+
+    "Relationship Status": {
+      "ID": "relationshipstatus",
+      "MapRemoteVersions": { "1.0.5": "1.0.4" } // not updated in manifest
+    },
+
+    "ReRegeneration": {
+      "ID": "lrsk_sdvm_rerg.0925160827",
+      "MapLocalVersions": { "1.1.2-release": "1.1.2" }
+    },
+
+    "Save Backup": {
+      "ID": "Omegasis.SaveBackup",
+      "~1.2    | Status": "AssumeBroken" // broke in SMAPI 2.0
+    },
+
+    "Server Bookmarker": {
+      "ID": "Ilyaki.ServerBookmarker",
+      "~1.0.0 | Status": "AssumeBroken" // broke in Stardew Valley 1.3.29 (runtime errors)
+    },
+
+    "Shop Expander": {
+      "ID": "Entoarox.ShopExpander",
+      "FormerIDs": "EntoaroxShopExpander", // changed in 1.5.2
+      "MapRemoteVersions": { "1.6.0b": "1.6.0" }
+    },
+
+    "Showcase Mod": {
+      "ID": "Igorious.Showcase",
+      "MapLocalVersions": { "0.9-500": "0.9" }
+    },
+
+    "Siv's Marriage Mod": {
+      "ID": "6266959802", // official version
+      "FormerIDs": "Siv.MarriageMod | medoli900.Siv's Marriage Mod", // 1.2.3-unofficial versions
+      "MapLocalVersions": { "0.0": "1.4" }
+    },
+
+    "Skill Prestige: Cooking Adapter": {
+      "ID": "Alphablackwolf.CookingSkillPrestigeAdapter",
+      "FormerIDs": "20d6b8a3-b6e7-460b-a6e4-07c2b0cb6c63", // changed circa 1.1
+      "MapRemoteVersions": { "1.2.3": "1.1" } // manifest not updated
+    },
+
+    "Skull Cave Saver": {
+      "ID": "cantorsdust.SkullCaveSaver",
+      "FormerIDs": "8ac06349-26f7-4394-806c-95d48fd35774 | community.SkullCaveSaver", // changed in 1.1 and 1.2.2
+      "1.3-beta | Status": "AssumeBroken" // doesn't work in multiplayer, no longer maintained
+    },
+
+    "Solar Eclipse Event": {
+      "ID": "KoihimeNakamura.SolarEclipseEvent",
+      "MapLocalVersions": { "1.3.1-20180131": "1.3.1" }
+    },
+
+    "Split Screen": {
+      "ID": "Ilyaki.SplitScreen",
+      "~3.0.1 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
+    },
+
+    "Stardew Notification": {
+      "ID": "stardewnotification",
+      "Default | UpdateKey": "GitHub:monopandora/StardewNotification"
+    },
+
+    "Stephan's Lots of Crops": {
+      "ID": "stephansstardewcrops",
+      "MapRemoteVersions": { "1.41": "1.1" }, // manifest not updated
+      "~1.1    | Status": "AssumeBroken" // broke in SDV 1.3 (overwrites vanilla items)
+    },
+
+    "Summit Reborn": {
+      "ID": "KoihimeNakamura.summitreborn",
+      "FormerIDs": "emissaryofinfinity.summitreborn", // changed in 1.0.2
+      "~1.0.2 | Status": "AssumeBroken" // broke in SDV 1.3 (runtime errors)
+    },
+
+    "Time Reminder": {
+      "ID": "KoihimeNakamura.TimeReminder",
+      "MapLocalVersions": { "1.0-20170314": "1.0.2" }
+    },
+
+    "Tool Charging": {
+      "ID": "mralbobo.ToolCharging",
+      "Default | UpdateKey": "GitHub:mralbobo/stardew-tool-charging"
+    },
+
+    "Variable Grass": {
+      "ID": "dantheman999.VariableGrass",
+      "Default | UpdateKey": "GitHub:dantheman999301/StardewMods"
+    },
+
+    "Zoom Out Extreme": {
+      "ID": "RockinMods.ZoomMod",
+      "FormerIDs": "ZoomMod", // changed circa 1.2.1
+      "~0.1 | Status": "AssumeBroken" // broke in SDV 1.2
+    }
+  }
+}
