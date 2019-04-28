@@ -1,9 +1,10 @@
 package com.MartyrPher.smapiandroidinstaller;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,9 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String ASSET_STARDEW_FILES = "Stardew/";
     private static final String DIR_APK_FILES = "/SMAPI Installer/ApkFiles/";
     private static final String DIR_STARDEW_FILES = "/StardewValley/smapi-internal/";
+    private static final String PATH_TO_SIGNED_APK = Environment.getExternalStorageDirectory() + "/SMAPI Installer/base_signed.apk";
+    private static final String TAG = "MainActivity";
+
+    private static final int UNINSTALL_REQUEST_CODE = 0;
+    private static final int INSTALL_REQUEST_CODE = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "Making Copy of APK :)", Toast.LENGTH_SHORT).show();
 
                 ApkExtractor apkExtractor = new ApkExtractor();
                 WriteApk writeApk = new WriteApk();
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                                         new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "classes.dex")};
                     writeApk.AddFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched0.apk"), resources, "", true, 1);
                     signApk.CommitSignApk();
+
+                    UninstallStardew();
                     Toast.makeText(getApplicationContext(), "Done :)", Toast.LENGTH_SHORT).show();
 
                 }catch (Exception ex)
@@ -59,6 +66,48 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void UninstallStardew()
+    {
+        String app_pkg_name = "com.chucklefish.stardewvalley";
+
+        Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+        intent.setData(Uri.parse("package:" + app_pkg_name));
+        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+        startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+            case UNINSTALL_REQUEST_CODE:
+                if (requestCode == RESULT_OK)
+                {
+                    Log.d(TAG, "The User Accepted the Uninstall");
+                } else if (resultCode == RESULT_CANCELED)
+                {
+                    Log.d(TAG, "The User Cancelled the Uninstall");
+                } else if (resultCode == RESULT_FIRST_USER)
+                {
+                    Log.d(TAG, "Failed to Uninstall");
+                }
+                break;
+            case INSTALL_REQUEST_CODE:
+                if (requestCode == RESULT_OK)
+                {
+                    Log.d(TAG, "The User Accepted the Install");
+                } else if (resultCode == RESULT_CANCELED)
+                {
+                    Log.d(TAG, "The User Cancelled the Install");
+                } else if (resultCode == RESULT_FIRST_USER)
+                {
+                    Log.d(TAG, "Failed to Install");
+                }
+                break;
+        }
     }
 
     private void copyAssets(String asset, String dir) {
