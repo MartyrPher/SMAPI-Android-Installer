@@ -2,6 +2,7 @@ package com.MartyrPher.smapiandroidinstaller;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,25 +11,47 @@ import android.support.v4.app.DialogFragment;
 
 public class DialogFrag extends DialogFragment {
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("This will Install SMAPI and require to Uninstall the current verison of Stardew Valley from the device. Continue?")
-                .setPositiveButton("Install", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Start AsyncTask
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+    public static AlertDialog mAlertDialog;
 
-                    }
-                });
-        return builder.create();
+    public DialogFrag()
+    {
     }
 
+    public static void showDialog(Context context, int message, int tag)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        switch(tag)
+        {
+            case 0:
+                builder.setMessage(message);
+                builder.setCancelable(false);
+                mAlertDialog = builder.create();
+                mAlertDialog.show();
+                break;
+            case 1:
+                builder.setMessage(message);
+                builder.setPositiveButton("Okay", null);
+                builder.show();
+                break;
+        }
+    }
+
+    public static void dismissDialog(Context context, int message)
+    {
+        if(mAlertDialog.isShowing())
+        {
+            mAlertDialog.dismiss();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("Awesome", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
 
 }

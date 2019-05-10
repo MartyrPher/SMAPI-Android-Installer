@@ -20,7 +20,7 @@ public class WriteApk {
     {
     }
 
-    public void AddFilesToApk(File source, File[] files, String path, boolean compression, int count){
+    public void addFilesToApk(File source, File[] files, String path, boolean compression, int count){
         try{
             byte[] buffer = new byte[4096];
             ZipInputStream zin = new ZipInputStream(new FileInputStream(source));
@@ -58,7 +58,7 @@ public class WriteApk {
                 in.close();
             }
             for(ZipEntry ze = zin.getNextEntry(); ze != null; ze = zin.getNextEntry()){
-                if(!ApkEntryMatch(ze.getName(), files, path)){
+                if(!apkEntryMatch(ze.getName(), files, path)){
                     out.putNextEntry(ze);
                     for(int read = zin.read(buffer); read > -1; read = zin.read(buffer)){
                         out.write(buffer, 0, read);
@@ -74,7 +74,7 @@ public class WriteApk {
         }
     }
 
-    private boolean ApkEntryMatch(String zeName, File[] files, String path){
+    private boolean apkEntryMatch(String zeName, File[] files, String path){
         for(int i = 0; i < files.length; i++){
             if((path + files[i].getName()).equals(zeName)){
                 return true;

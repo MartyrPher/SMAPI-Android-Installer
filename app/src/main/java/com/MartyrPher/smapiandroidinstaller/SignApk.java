@@ -26,13 +26,12 @@ public class SignApk {
     {
     }
 
-    public void CommitSignApk()
+    public void commitSignApk()
     {
         try {
             String inputFile = APK_LOCATION;
             String outputFile = Environment.getExternalStorageDirectory() + "/SMAPI Installer/base_signed.apk";
-
-            //File keystoreFile = new File(KEYSTORE_LOCATION);
+            
             KeyStore keyStore = KeyStoreFileManager.loadKeyStore(KEYSTORE_LOCATION,KEYSTORE_PASSWORD.toCharArray());
             String alias = keyStore.aliases().nextElement();
 

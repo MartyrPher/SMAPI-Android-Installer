@@ -1,10 +1,14 @@
 package com.MartyrPher.smapiandroidinstaller;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,51 +28,82 @@ public class MainActivity extends AppCompatActivity {
     private static final String ASSET_STARDEW_FILES = "Stardew/";
     private static final String DIR_APK_FILES = "/SMAPI Installer/ApkFiles/";
     private static final String DIR_STARDEW_FILES = "/StardewValley/smapi-internal/";
-    private static final String PATH_TO_SIGNED_APK = Environment.getExternalStorageDirectory() + "/SMAPI Installer/base_signed.apk";
     private static final String TAG = "MainActivity";
 
     private static final int UNINSTALL_REQUEST_CODE = 0;
-    private static final int INSTALL_REQUEST_CODE = 1;
+    private static final int MY_PERMISSION_REQUEST_STORAGE = 2;
+
+    private boolean hasPermissions = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestPermissions();
+
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ApkExtractor apkExtractor = new ApkExtractor();
-                WriteApk writeApk = new WriteApk();
-                SignApk signApk = new SignApk();
-
-                apkExtractor.ExtractAPK(getApplicationContext());
-                try
+                if (hasPermissions)
                 {
-                    copyAssets(ASSET_APK_FILES, DIR_APK_FILES);
-                    copyAssets(ASSET_STARDEW_FILES, DIR_STARDEW_FILES);
-                    File[] moddingAPI = {new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "StardewModdingAPI.dll")};
+                    boolean foundGame;
+                    ApkExtractor apkExtractor = new ApkExtractor(MainActivity.this);
+                    BackgroundTask backgroundTask = new BackgroundTask(MainActivity.this);
 
-                    writeApk.AddFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk"), moddingAPI, "assemblies/", false, 0);
-                    File[] resources = {new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "AndroidManifest.xml"),
-                                        new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "classes.dex")};
-                    writeApk.AddFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched0.apk"), resources, "", true, 1);
-                    signApk.CommitSignApk();
+                    foundGame = apkExtractor.extractAPK(getApplicationContext());
 
-                    UninstallStardew();
-                    Toast.makeText(getApplicationContext(), "Done :)", Toast.LENGTH_SHORT).show();
+                    if(foundGame)
+                    {
+                        copyAssets(ASSET_APK_FILES, DIR_APK_FILES);
+                        copyAssets(ASSET_STARDEW_FILES, DIR_STARDEW_FILES);
 
-                }catch (Exception ex)
+                        backgroundTask.execute();
+                    }
+                    else
+                    {
+                        DialogFrag.showDialog(MainActivity.this, R.string.cant_find, 1);
+                    }
+                }
+                else
                 {
-
+                    requestPermissions();
                 }
             }
         });
     }
 
-    public void UninstallStardew()
+    public void requestPermissions()
+    {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSION_REQUEST_STORAGE);
+        }
+        else
+        {
+            hasPermissions = true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode)
+        {
+            case MY_PERMISSION_REQUEST_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    hasPermissions = true;
+                    Toast.makeText(this, "Permission Granted :)", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    //Prompts the user to Uninstall the current version of the game from the device
+    public void uninstallStardew()
     {
         String app_pkg_name = "com.chucklefish.stardewvalley";
 
@@ -78,38 +113,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode)
-        {
-            case UNINSTALL_REQUEST_CODE:
-                if (requestCode == RESULT_OK)
-                {
-                    Log.d(TAG, "The User Accepted the Uninstall");
-                } else if (resultCode == RESULT_CANCELED)
-                {
-                    Log.d(TAG, "The User Cancelled the Uninstall");
-                } else if (resultCode == RESULT_FIRST_USER)
-                {
-                    Log.d(TAG, "Failed to Uninstall");
-                }
-                break;
-            case INSTALL_REQUEST_CODE:
-                if (requestCode == RESULT_OK)
-                {
-                    Log.d(TAG, "The User Accepted the Install");
-                } else if (resultCode == RESULT_CANCELED)
-                {
-                    Log.d(TAG, "The User Cancelled the Install");
-                } else if (resultCode == RESULT_FIRST_USER)
-                {
-                    Log.d(TAG, "Failed to Install");
-                }
-                break;
-        }
-    }
-
+    //Copies the needed files from the APK to a local directory so they can be used
     private void copyAssets(String asset, String dir) {
         AssetManager assetManager = getAssets();
         String[] files = null;
@@ -152,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;

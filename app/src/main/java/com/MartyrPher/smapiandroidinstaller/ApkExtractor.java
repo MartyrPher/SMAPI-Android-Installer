@@ -19,13 +19,15 @@ public class ApkExtractor{
     private static final String PACKAGE_NAME = "com.chucklefish.stardewvalley";
     private static final String TAG = "ApkExtractor";
 
-    //Blank Constructor
-    public ApkExtractor()
+    private final Context context;
+
+    public ApkExtractor(Context appContext)
     {
+        this.context = appContext;
     }
 
     //Extracts the APK to a local directory where it can access the files
-    public void ExtractAPK(Context context) {
+    public boolean extractAPK(Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(PACKAGE_NAME, 0);
@@ -48,7 +50,9 @@ public class ApkExtractor{
             }
         } catch (PackageManager.NameNotFoundException ex) {
             Log.e(TAG, ex.getLocalizedMessage());
+            return false;
         }
+        return true;
     }
 
     private void copy(File src, File dst) throws IOException {
