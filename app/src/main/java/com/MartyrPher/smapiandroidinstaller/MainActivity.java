@@ -26,8 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String ASSET_APK_FILES = "SMAPI/";
     private static final String ASSET_STARDEW_FILES = "Stardew/";
+    private static final String MOD_FILES_VK = "VirtualKeyboard/";
+    private static final String MOD_FILES_VK_ASSET = "VirtualKeyboard/assets/";
     private static final String DIR_APK_FILES = "/SMAPI Installer/ApkFiles/";
     private static final String DIR_STARDEW_FILES = "/StardewValley/smapi-internal/";
+    private static final String DIR_MODS_VK = "/StardewValley/Mods/VirtualKeyboard";
+    private static final String DIR_MODS_VK_ASSET = "/StardewValley/Mods/VirtualKeyboard/assets";
     private static final String TAG = "MainActivity";
 
     private static final int UNINSTALL_REQUEST_CODE = 0;
@@ -58,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         copyAssets(ASSET_APK_FILES, DIR_APK_FILES);
                         copyAssets(ASSET_STARDEW_FILES, DIR_STARDEW_FILES);
+                        copyAssets(MOD_FILES_VK, DIR_MODS_VK);
+                        copyAssets(MOD_FILES_VK_ASSET, DIR_MODS_VK_ASSET);
 
                         backgroundTask.execute();
                     }
@@ -125,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             files = assetManager.list(asset);
         } catch (IOException e) {
-            Log.e("tag", "Failed to get asset file list.", e);
+            Log.e(TAG, "Failed to get asset file list.", e);
         }
         if (files != null) for (String filename : files) {
             InputStream in = null;
@@ -136,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
             } catch(IOException e) {
-                Log.e("tag", "Failed to copy asset file: " + filename, e);
+                Log.e(TAG, "Failed to copy asset file: " + filename, e);
             }
             finally {
                 if (in != null) {

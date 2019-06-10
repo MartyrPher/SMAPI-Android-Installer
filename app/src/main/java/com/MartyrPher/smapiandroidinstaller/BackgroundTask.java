@@ -10,7 +10,7 @@ import java.io.File;
 public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = "BackgroundTask";
-    private static final String DIR_APK_FILES = "/SMAPI Installer/ApkFiles/";
+    private static final String DIR_APK_FILES = Environment.getExternalStorageDirectory() + "/SMAPI Installer/ApkFiles/";
     private Context contextActivity;
 
     public BackgroundTask(Context context)
@@ -32,13 +32,30 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
         try
         {
-            File[] moddingAPI = {new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "StardewModdingAPI.dll")};
+            File[] moddingAPI = {new File( DIR_APK_FILES + "StardewModdingAPI.dll"),
+                                new File(DIR_APK_FILES + "StardewModdingAPI.Toolkit.CoreInterfaces.dll"),
+                                new File( DIR_APK_FILES + "StardewModdingAPI.Toolkit.dll"),
+                                new File( DIR_APK_FILES + "Newtonsoft.json.dll"),
+                                new File( DIR_APK_FILES + "System.Data.dll"),
+                                new File( DIR_APK_FILES + "System.Numerics.dll")};
             publishProgress(1);
             writeApk.addFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk"), moddingAPI, "assemblies/", false, 0);
-            File[] resources = {new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "AndroidManifest.xml"),
-                    new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "classes.dex")};
+            File[] resources = {new File(DIR_APK_FILES + "AndroidManifest.xml"),
+                    new File( DIR_APK_FILES + "classes.dex")};
             writeApk.addFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched0.apk"), resources, "", true, 1);
             signApk.commitSignApk();
+            File filesToDelete = new File(DIR_APK_FILES);
+            File deleteOldApk = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched0.apk_patched1.apk");
+            deleteOldApk.delete();
+            if (filesToDelete.isDirectory())
+            {
+                String[] child = filesToDelete.list();
+                for (int i = 0; i < child.length; i++)
+                {
+                    new File(filesToDelete, child[i]).delete();
+                }
+                filesToDelete.delete();
+            }
             return true;
         }
         catch(Exception e)

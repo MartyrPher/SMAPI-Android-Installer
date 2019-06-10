@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SMAPI Android Installer</string>
     <string name="cant_find">Could not find the Stardew Valley Apk. Is the game installed?</string>
-    <string name="modify_apk">Modifying the Apk…this might take some time fucker.</string>
-    <string name="finished">Finished!</string>
+    <string name="modify_apk">Modifying the Apk…this might take some time. Please keep the screen on.</string>
+    <string name="finished">Finished! The modified apk can be found here: /SMAPI Installer/base_signed.apk. You have to Uninstall the original game first.</string>
 </resources>
