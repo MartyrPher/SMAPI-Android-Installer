@@ -3,24 +3,19 @@ Installs SMAPI to Android Devices
 
 # For Players
 ## How to use
-Download the latest apk from the releases tab, it contains all the latest files.
-
-After installing the SMAPI Installer app, open it up and click the `Install` button to begin the install process.
-
-The process may take some time depending on the age and specs of the device.
-
-Once it's installed, you're good to go and can uninstall the Installer app if you please to do so.
-
-Add mods in the newly created `StardewValley/Mods` directory.
-
-Lastly, Just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
+1. Download the latest apk from the releases tab, it contains all the latest files.
+2. After installing the SMAPI Installer app, open it up and click the `Install` button to begin the install process.
+3. The process may take some time depending on the age and specs of the device.
+4. Once it's installed, you're good to go and can uninstall the Installer app if you please to do so.
+5. Add mods in the newly created `StardewValley/Mods` directory.
+6. Lastly, Just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
 
 ## Mod Support
 The focus when it comes to mods is try to make the bigger mods compatible first!
 
 Here's a list of some of the bigger mods that are supported:
 
-- [Content Patcher](https://www.nexusmods.com/stardewvalley/mods/1915) by PathosChild.
+- [Content Patcher](https://www.nexusmods.com/stardewvalley/mods/1915) by Pathoschild.
 - [Json Assets](https://www.nexusmods.com/stardewvalley/mods/1720) by spacechase0.
 - [PyTK](https://www.nexusmods.com/stardewvalley/mods/1726) by Platonymous (aka Routine).
 - [Partial SVE support](https://www.nexusmods.com/stardewvalley/mods/3753) by FlashShifter.
