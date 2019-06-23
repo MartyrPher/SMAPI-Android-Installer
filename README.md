@@ -2,7 +2,7 @@
 Installs SMAPI to Android Devices
 
 # For Players
-##How to use
+## How to use
 Download the latest apk from the releases tab, it contains all the latest files.
 
 After installing the SMAPI Installer app, open it up and click the `Install` button to begin the install process.
@@ -15,7 +15,7 @@ Add mods in the newly created `StardewValley/Mods` directory.
 
 Lastly, Just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
 
-##Mod Support
+## Mod Support
 The focus when it comes to mods is try to make the bigger mods compatible first!
 
 Here's a list of some of the bigger mods that are supported:
@@ -27,12 +27,12 @@ Here's a list of some of the bigger mods that are supported:
 - [Farm Type Manager](https://www.nexusmods.com/stardewvalley/mods/3231) by EscaMMC (aka Esca).
 - And plenty more!
 
-##Manual Install
+## Manual Install
 If the Automatic Installer doesn't work I'll always have a manual install option under the releases tab.
 
 Note: It's the `.zip` file.
 
-##How the installer works
+## How the installer works
 1. It pulls the actual games apk from the device.
 2. It creates all the needed directories on the the device.
 3. Modifies the apk to add SMAPI needed files.
