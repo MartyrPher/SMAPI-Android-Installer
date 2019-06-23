@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 
 public class DialogFrag extends DialogFragment {
 
@@ -36,7 +37,31 @@ public class DialogFrag extends DialogFragment {
         }
     }
 
-    public static void dismissDialog(Context context, int message)
+    public static void dismissDialog(Context context)
+    {
+        if (mAlertDialog.isShowing())
+            mAlertDialog.dismiss();
+    }
+
+    public static void dismissDialogInt(Context context, int message)
+    {
+        if(mAlertDialog.isShowing())
+        {
+            mAlertDialog.dismiss();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("Awesome", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    public static void dismissDialogString(Context context, String message)
     {
         if(mAlertDialog.isShowing())
         {
