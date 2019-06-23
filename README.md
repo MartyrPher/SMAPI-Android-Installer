@@ -6,8 +6,8 @@ Installs SMAPI to Android Devices
 1. Download the latest apk from the releases tab, it contains all the latest files.
 2. After installing the SMAPI Installer app, open it up and click the `Install` button to begin the install process.
 3. The process may take some time depending on the age and specs of the device.
--Samsung Galaxy S10 took 40s.
--Samsung Galaxy S6 took 1m 58s.
+- Samsung Galaxy S10 took 40s.
+- Samsung Galaxy S6 took 1m 58s.
 4. Once it's installed, you're good to go and can uninstall the Installer app if you please to do so.
 5. Add mods in the newly created `StardewValley/Mods` directory.
 6. Lastly, Just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
