@@ -4,4 +4,6 @@
     <string name="modify_apk">Modifying the Apk…this might take some time. Please keep the screen on.</string>
     <string name="finished">Finished!</string>
     <string name="install">Error in opening file!</string>
+    <string name="start_install">Starting Install</string>
+    <string name="permission">Permission Granted</string>
 </resources>

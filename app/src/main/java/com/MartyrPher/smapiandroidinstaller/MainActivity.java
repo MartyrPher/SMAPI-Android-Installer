@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         start_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                start_button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                Toast.makeText(MainActivity.this, R.string.start_install, Toast.LENGTH_SHORT).show();
                 if (hasPermissions)
                 {
                     boolean foundGame;
@@ -39,9 +41,14 @@ public class MainActivity extends AppCompatActivity {
                     foundGame = apkExtractor.extractAPK(getApplicationContext());
 
                     if(foundGame)
+                    {
                         backgroundTask.execute();
+                    }
                     else
+                    {
                         DialogFrag.showDialog(MainActivity.this, R.string.cant_find, 1);
+                        start_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    }
 
                 }
                 else
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     hasPermissions = true;
-                    Toast.makeText(this, "Permission Granted :)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.permission, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
