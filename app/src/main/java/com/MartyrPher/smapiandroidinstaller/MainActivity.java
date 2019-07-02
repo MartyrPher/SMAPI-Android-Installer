@@ -31,17 +31,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 start_button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                Toast.makeText(MainActivity.this, R.string.start_install, Toast.LENGTH_SHORT).show();
                 if (hasPermissions)
                 {
-                    boolean foundGame;
+                    boolean[] foundGame;
                     ApkExtractor apkExtractor = new ApkExtractor(MainActivity.this);
-                    BackgroundTask backgroundTask = new BackgroundTask(MainActivity.this);
 
-                    foundGame = apkExtractor.extractAPK(getApplicationContext());
+                    foundGame = apkExtractor.checkForInstallOrUpgrade();
 
-                    if(foundGame)
+                    if((foundGame[0] || foundGame[1]))
                     {
+                        BackgroundTask backgroundTask = new BackgroundTask(MainActivity.this, apkExtractor, foundGame[0]);
                         backgroundTask.execute();
                     }
                     else
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    //Request permissions to be able to read/write external storage
     public void requestPermissions()
     {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)

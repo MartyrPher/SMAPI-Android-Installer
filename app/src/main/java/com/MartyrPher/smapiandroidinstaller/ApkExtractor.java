@@ -16,26 +16,50 @@ import android.util.Log;
 
 public class ApkExtractor{
 
-    private static final String PACKAGE_NAME = "com.chucklefish.stardewvalley";
     private static final String TAG = "ApkExtractor";
+    private static final String[] PACKAGE_NAMES = {"com.martyrpher.stardewvalley", "com.chucklefish.stardewvalley"};
 
     private final Context context;
+
+    private ApplicationInfo mApplicationInfo;
+    private PackageManager mPackageManager;
+    private PackageInfo mPackageInfo;
 
     public ApkExtractor(Context appContext)
     {
         this.context = appContext;
     }
 
+    public boolean[] checkForInstallOrUpgrade()
+    {
+        mPackageManager = context.getPackageManager();
+        boolean[] foundApk = {false, false};
+        for (int i = 0; i < foundApk.length; i++)
+        {
+            try
+            {
+                mPackageInfo =  mPackageManager.getPackageInfo(PACKAGE_NAMES[i], 0);
+                mApplicationInfo = getApplicationInfoFrom(mPackageManager, mPackageInfo);
+
+                File file = new File(mApplicationInfo.publicSourceDir);
+                if (file.exists())
+                {
+                    foundApk[i] = true;
+                }
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                //Do NOTHING
+            }
+        }
+        return foundApk;
+    }
+
     //Extracts the APK to a local directory where it can access the files
-    public boolean extractAPK(Context context) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(PACKAGE_NAME, 0);
-
-            ApplicationInfo applicationInfo;
-            applicationInfo = getApplicationInfoFrom(packageManager, packageInfo);
-
-            File apkFile = new File(applicationInfo.publicSourceDir);
+    public boolean extractAPK() {
+        try
+        {
+            File apkFile = new File(mApplicationInfo.publicSourceDir);
             File dest = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/");
             if (apkFile.exists()) {
                 try {
@@ -48,7 +72,7 @@ public class ApkExtractor{
                     Log.e(TAG, e.getLocalizedMessage());
                 }
             }
-        } catch (PackageManager.NameNotFoundException ex) {
+        } catch (Exception ex) {
             Log.e(TAG, ex.getLocalizedMessage());
             return false;
         }

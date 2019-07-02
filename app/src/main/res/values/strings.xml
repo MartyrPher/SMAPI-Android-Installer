@@ -2,8 +2,19 @@
     <string name="app_name">SMAPI Android Installer</string>
     <string name="cant_find">Could not find the Stardew Valley Apk. Is the game installed?</string>
     <string name="modify_apk">Modifying the Apk…this might take some time. Please keep the screen on.</string>
+    <string name="update_apk">Updating the Apk…this might take some time. Please keep the screen on.</string>
     <string name="finished">Finished!</string>
     <string name="install">Error in opening file!</string>
-    <string name="start_install">Starting Install</string>
     <string name="permission">Permission Granted</string>
+    <string name="notes">Notes: Game version 1.25 and above is required.</string>
+    <string name="base_game_required">The base game is required when updating/installing.</string>
+    <string name="installing_pufferchicks">Installing pufferchicks...</string>
+    <string name="install_milk_cows">Milking the cows...</string>
+    <string name="install_ancient_fruit">Planting ancient fruit...</string>
+    <string name="install_abigail_rocks">Feeding Abigail rocks...</string>
+    <string name="install_feeding_juminos">Jumping with juminos...</string>
+    <string name="install_squid_ocean">Grabbing squids from the ocean...</string>
+    <string name="install_dino_egg">Digging for dino eggs...</string>
+    <string name="install_rock_crab">That rock was a crab!?...</string>
+    <string name="blank"> </string>
 </resources>

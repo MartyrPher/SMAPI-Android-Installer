@@ -8,11 +8,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class DialogFrag extends DialogFragment {
 
     public static AlertDialog mAlertDialog;
+
+    private static ProgressBar mProgressBar;
+    private static TextView mTextView;
+
+    //Test array to cycle through different messages
+    private static int[] messages = { R.string.installing_pufferchicks,
+                                    R.string.install_milk_cows,
+                                    R.string.install_ancient_fruit ,
+                                    R.string.install_abigail_rocks,
+                                    R.string.install_feeding_juminos,
+                                    R.string.install_squid_ocean,
+                                    R.string.install_dino_egg,
+                                    R.string.install_rock_crab };
 
     public DialogFrag()
     {
@@ -24,10 +43,15 @@ public class DialogFrag extends DialogFragment {
         switch(tag)
         {
             case 0:
+                LayoutInflater mLayoutInflater = LayoutInflater.from(context);
+                View dialogView = mLayoutInflater.inflate(R.layout.progress_bar_dialog, null);
+                builder.setView(dialogView);
                 builder.setMessage(message);
                 builder.setCancelable(false);
                 mAlertDialog = builder.create();
                 mAlertDialog.show();
+                mProgressBar = dialogView.findViewById(R.id.progressBar);
+                mTextView = dialogView.findViewById(R.id.install_message);
                 break;
             case 1:
                 builder.setMessage(message);
@@ -37,28 +61,16 @@ public class DialogFrag extends DialogFragment {
         }
     }
 
-    public static void dismissDialog(Context context)
+    public static void updateProgressBar(int progress, int message)
+    {
+        mProgressBar.setProgress(progress);
+        mTextView.setText(message);
+    }
+
+    public static void dismissDialog()
     {
         if (mAlertDialog.isShowing())
             mAlertDialog.dismiss();
-    }
-
-    public static void dismissDialogInt(Context context, int message)
-    {
-        if(mAlertDialog.isShowing())
-        {
-            mAlertDialog.dismiss();
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(message);
-        builder.setPositiveButton("Awesome", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
     }
 
     public static void dismissDialogString(Context context, String message)
@@ -70,7 +82,7 @@ public class DialogFrag extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setMessage(message);
-        builder.setPositiveButton("Awesome", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Oh No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

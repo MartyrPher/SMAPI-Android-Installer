@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -20,15 +21,18 @@ public class WriteApk {
     {
     }
 
-    public void addFilesToApk(File source, File[] files, String path, boolean compression, int count){
-        try{
+    public void addFilesToApk(File source, File[] files, String[] path, boolean[] compression){
+        try
+        {
             byte[] buffer = new byte[4096];
+            ZipFile zipFile = new ZipFile(source);
+
             ZipInputStream zin = new ZipInputStream(new FileInputStream(source));
-            ZipOutputStream out = new ZipOutputStream(new FileOutputStream( source + "_patched" + count + ".apk"));
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream( source + "_patched.apk"));
 
             for(int i = 0; i < files.length; i++){
                 CRC32 crc = new CRC32();
-                if (!compression)
+                if (!compression[i])
                 {
                     int bytesRead;
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(files[i]));
@@ -40,9 +44,9 @@ public class WriteApk {
                 }
 
                 InputStream in = new FileInputStream(files[i]);
-                ZipEntry compress = new ZipEntry(path + files[i].getName());
+                ZipEntry compress = new ZipEntry(path[i] + files[i].getName());
 
-                if (!compression)
+                if (!compression[i])
                 {
                     compress.setMethod(ZipEntry.STORED);
                     compress.setCompressedSize(files[i].length());
@@ -50,7 +54,7 @@ public class WriteApk {
                     compress.setCrc(crc.getValue());
                 }
 
-                out.putNextEntry(new ZipEntry(compress));
+                out.putNextEntry(compress);
                 for(int read = in.read(buffer); read > -1; read = in.read(buffer)){
                     out.write(buffer, 0, read);
                 }
@@ -74,9 +78,9 @@ public class WriteApk {
         }
     }
 
-    private boolean apkEntryMatch(String zeName, File[] files, String path){
+    private boolean apkEntryMatch(String zeName, File[] files, String[] path){
         for(int i = 0; i < files.length; i++){
-            if((path + files[i].getName()).equals(zeName)){
+            if((path[i] + files[i].getName()).equals(zeName)){
                 return true;
             }
         }

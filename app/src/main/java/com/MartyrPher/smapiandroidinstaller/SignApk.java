@@ -17,10 +17,9 @@ import java.security.cert.X509Certificate;
 public class SignApk {
 
     private static final String TAG = "SignApk";
-    private static final String APK_LOCATION = Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched0.apk_patched1.apk";
+    private static final String APK_LOCATION = Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched.apk";
     private static final String KEYSTORE_LOCATION = Environment.getExternalStorageDirectory() + "/SMAPI Installer/ApkFiles/debug.keystore";
     private static final String KEYSTORE_PASSWORD = "android";
-
 
     public SignApk()
     {
