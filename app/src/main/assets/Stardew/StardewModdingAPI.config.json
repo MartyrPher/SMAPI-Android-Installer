@@ -45,9 +45,9 @@ This file contains advanced configuration for SMAPI. You generally shouldn't cha
   //"UseBetaChannel": true,
 
   /**
-   * SMAPI's GitHub project name, used to perform update checks.
+   * Android SMAPI's GitHub project name, used to perform update checks.
    */
-  "GitHubProjectName": "Pathoschild/SMAPI",
+  "GitHubProjectName": "MartyrPher/SMAPI-Android-Installer",
 
   /**
    * The base URL for SMAPI's web API, used to perform update checks.
