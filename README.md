@@ -10,7 +10,7 @@ Installs SMAPI to Android Devices
 - Samsung Galaxy S6 took 1m 13s.
 4. Once it's installed, you're good to go and can uninstall the Installer app if you please to do so.
 5. Add mods in the newly created `StardewValley/Mods` directory.
-6. Lastly, Just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
+6. Lastly, just click on the `SMAPI Stardew Valley` icon to start the SMAPI version of the game.
 
 ## Mod Support
 The focus when it comes to mods is try to make the bigger mods compatible first!
@@ -24,16 +24,22 @@ Here's a list of some of the bigger mods that are supported:
 - [Farm Type Manager](https://www.nexusmods.com/stardewvalley/mods/3231) by EscaMMC (aka Esca).
 - And plenty more!
 
+## Tutorials
+Installing and Adding Mods
+- [Video Found Here](https://www.youtube.com/watch?v=jOXl6Dmu7wY&feature=youtu.be) by @Marigolden#6233.
+Just Installing
+- [Video Found Here](https://www.youtube.com/watch?v=GFGtbjSYnhw&feature=youtu.be) by Dae.
+
 ## Help
-If you run into any problems they're about four ways to get in touch.
+If you run into any problems there are about four ways to get in touch.
 1. Ping me on the [Official Stardew Valley Discord](https://discord.gg/KCJHWhX), on the #modding channel. @MartyrPher#5519
-2. Ping me on my [Android Stardew Modding Discord](https://discord.gg/HWaeYXg), same user as above.
+2. Ping me on the [Android Stardew Modding Discord](https://discord.gg/HWaeYXg), same user as above.
 3. Direct message me on reddit. u/MartyrPher
 4. Direct message me on Discord. @MartyrPher#5519
 
 ## Manual Install
 ~~If the Automatic Installer doesn't work I'll always have a manual install option under the releases tab.~~
-The Automatic Installer seems to be working on most devices. I'm removing the manual install from v0.87 and up, as it causes more harm than good.
+The Automatic Installer seems to be working on most devices. I'm removing the manual install from v0.8.7 and up, as it causes more harm than good.
 
 ~~Note: It's the `.zip` file.~~
 
