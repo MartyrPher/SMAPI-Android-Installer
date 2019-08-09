@@ -1,5 +1,7 @@
 package com.MartyrPher.smapiandroidinstaller;
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,14 +9,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 
 public class WriteApk {
 
-    private static final String TAG = "OpenApk";
+    private static final String TAG = "WriteApk";
 
     //Blank Constructor
     public WriteApk()
@@ -25,13 +26,15 @@ public class WriteApk {
         try
         {
             byte[] buffer = new byte[4096];
-            ZipFile zipFile = new ZipFile(source);
 
             ZipInputStream zin = new ZipInputStream(new FileInputStream(source));
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream( source + "_patched.apk"));
 
-            for(int i = 0; i < files.length; i++){
-                CRC32 crc = new CRC32();
+            CRC32 crc = new CRC32();
+
+            for(int i = 0; i < files.length; i++)
+            {
+
                 if (!compression[i])
                 {
                     int bytesRead;
@@ -63,6 +66,7 @@ public class WriteApk {
             }
             for(ZipEntry ze = zin.getNextEntry(); ze != null; ze = zin.getNextEntry()){
                 if(!apkEntryMatch(ze.getName(), files, path)){
+                    //ZipEntry loc_ze = new ZipEntry(ze.getName());
                     out.putNextEntry(ze);
                     for(int read = zin.read(buffer); read > -1; read = zin.read(buffer)){
                         out.write(buffer, 0, read);
@@ -73,8 +77,9 @@ public class WriteApk {
             out.close();
             zin.close();
             source.delete();
-        }catch(Exception e){
-            e.printStackTrace();
+        }
+        catch(Exception e){
+            Log.e(TAG, e.getMessage(), e);
         }
     }
 

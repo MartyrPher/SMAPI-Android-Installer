@@ -23,16 +23,6 @@ public class DialogFrag extends DialogFragment {
     private static ProgressBar mProgressBar;
     private static TextView mTextView;
 
-    //Test array to cycle through different messages
-    private static int[] messages = { R.string.installing_pufferchicks,
-                                    R.string.install_milk_cows,
-                                    R.string.install_ancient_fruit ,
-                                    R.string.install_abigail_rocks,
-                                    R.string.install_feeding_juminos,
-                                    R.string.install_squid_ocean,
-                                    R.string.install_dino_egg,
-                                    R.string.install_rock_crab };
-
     public DialogFrag()
     {
     }

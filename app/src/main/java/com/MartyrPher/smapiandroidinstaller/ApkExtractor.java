@@ -17,13 +17,17 @@ import android.util.Log;
 public class ApkExtractor{
 
     private static final String TAG = "ApkExtractor";
-    private static final String[] PACKAGE_NAMES = {"com.martyrpher.stardewvalley", "com.chucklefish.stardewvalley"};
+    private static final String[] PACKAGE_NAMES = {"com.martyrpher.stardewvalley", "com.chucklefish.stardewvalley", "com.chucklefish.stardewvalleysamsung"};
 
     private final Context context;
 
     private ApplicationInfo mApplicationInfo;
     private PackageManager mPackageManager;
     private PackageInfo mPackageInfo;
+
+    public static String sourceApkFilename;
+
+    private boolean[] foundApk = {false, false, false};
 
     public ApkExtractor(Context appContext)
     {
@@ -33,7 +37,7 @@ public class ApkExtractor{
     public boolean[] checkForInstallOrUpgrade()
     {
         mPackageManager = context.getPackageManager();
-        boolean[] foundApk = {false, false};
+
         for (int i = 0; i < foundApk.length; i++)
         {
             try
@@ -60,6 +64,7 @@ public class ApkExtractor{
         try
         {
             File apkFile = new File(mApplicationInfo.publicSourceDir);
+            Log.e(TAG, "APK path: " + mApplicationInfo.publicSourceDir);
             File dest = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/");
             if (apkFile.exists()) {
                 try {
@@ -67,6 +72,7 @@ public class ApkExtractor{
                     {
                         if(dest.mkdir());//directory is created;
                     }
+                    sourceApkFilename = apkFile.getName();
                     copy(apkFile.getAbsoluteFile(), new File(dest, apkFile.getName()));
                 } catch (IOException e) {
                     Log.e(TAG, e.getLocalizedMessage());
