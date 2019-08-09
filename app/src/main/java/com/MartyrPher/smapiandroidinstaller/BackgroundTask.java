@@ -70,14 +70,20 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             extractor.extractAPK();
             publishProgress(9);
 
+            //Creates a save folder if one doesn't exist already
             File saveFolder = new File(STARDEW_VALLEY_DIR);
             if (!saveFolder.exists())
                 saveFolder.mkdir();
 
-
+            //Creates the mod directory if one doesn't exist already
             File modDir = new File(MOD_DIR);
             if (!modDir.exists())
                 modDir.mkdir();
+
+            //Creates the .nomedia file if it doesn't exist already
+            File noMedia = new File(STARDEW_VALLEY_DIR + ".nomedia");
+            if (!noMedia.exists())
+                noMedia.createNewFile();
 
             copy.copyAssets(ASSET_APK_FILES, DIR_APK_FILES);
             publishProgress(18);
@@ -194,14 +200,14 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             };
             publishProgress(54);
 
-            writeApk.addFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk"), moddingAPI, paths, compressed);
+            writeApk.addFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/" + ApkExtractor.sourceApkFilename), moddingAPI, paths, compressed);
             publishProgress(63);
 
             signApk.commitSignApk();
             publishProgress(81);
 
             File filesToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES);
-            File deleteOldApk = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/base.apk_patched.apk");
+            File deleteOldApk = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/" + ApkExtractor.sourceApkFilename + "_patched.apk");
             deleteOldApk.delete();
             publishProgress(90);
 
