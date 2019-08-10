@@ -3,6 +3,7 @@ package com.MartyrPher.smapiandroidinstaller;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 
@@ -206,26 +207,19 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             signApk.commitSignApk();
             publishProgress(81);
 
-            File filesToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES);
+
             File deleteOldApk = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/" + ApkExtractor.sourceApkFilename + "_patched.apk");
             deleteOldApk.delete();
             publishProgress(90);
 
-            if (filesToDelete.isDirectory())
-            {
-                String[] child = filesToDelete.list();
-                for (int i = 0; i < child.length; i++)
-                {
-                    new File(filesToDelete, child[i]).delete();
-                }
-                filesToDelete.delete();
-            }
+            deleteApkFiles();
             publishProgress(100);
             return true;
         }
         catch(Exception e)
         {
-            DialogFrag.dismissDialogString(contextActivity, e.getMessage());
+            Log.e(TAG, e.getMessage(), e);
+            DialogFrag.dismissDialog();
             return false;
         }
     }
@@ -272,5 +266,77 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             DialogFrag.dismissDialog();
             apkInstall.installNewStardew();
         }
+    }
+
+    //This is super wack but I'm on a time crunch and can probably do this in one nested FOR loop...
+    private void deleteApkFiles()
+    {
+        File filesToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES);
+        File mdpiToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES_MDPI);
+        File hdpiToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES_HDPI);
+        File xhdpiToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES_XHDPI);
+        File xxhdpiToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES_XXHDPI);
+        File xxxhdpiToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES_XXXHDPI);
+
+        if (filesToDelete.isDirectory())
+        {
+            String[] child = filesToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(filesToDelete, child[i]).delete();
+            }
+        }
+
+        if (mdpiToDelete.isDirectory())
+        {
+            String[] child = mdpiToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(mdpiToDelete, child[i]).delete();
+            }
+            mdpiToDelete.delete();
+        }
+
+        if (hdpiToDelete.isDirectory())
+        {
+            String[] child = hdpiToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(hdpiToDelete, child[i]).delete();
+            }
+            hdpiToDelete.delete();
+        }
+
+        if (xhdpiToDelete.isDirectory())
+        {
+            String[] child = xhdpiToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(xhdpiToDelete, child[i]).delete();
+            }
+            xhdpiToDelete.delete();
+        }
+
+        if (xxhdpiToDelete.isDirectory())
+        {
+            String[] child = xxhdpiToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(xxhdpiToDelete, child[i]).delete();
+            }
+            xxhdpiToDelete.delete();
+        }
+
+        if (xxxhdpiToDelete.isDirectory())
+        {
+            String[] child = xxxhdpiToDelete.list();
+            for (int i = 0; i < child.length; i++)
+            {
+                new File(xxxhdpiToDelete, child[i]).delete();
+            }
+            xxxhdpiToDelete.delete();
+        }
+
+        filesToDelete.delete();
     }
 }
