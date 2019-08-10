@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
                     foundGame = apkExtractor.checkForInstallOrUpgrade();
 
-                    if((foundGame[0] || foundGame[1] || foundGame[2]))
+                    if(foundGame[0] && (foundGame[1] || foundGame[2]))
                     {
                         BackgroundTask backgroundTask = new BackgroundTask(MainActivity.this, apkExtractor, foundGame[0]);
                         backgroundTask.execute();

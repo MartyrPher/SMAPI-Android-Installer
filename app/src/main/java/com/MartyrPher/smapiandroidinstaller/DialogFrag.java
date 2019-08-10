@@ -78,7 +78,8 @@ public class DialogFrag extends DialogFragment {
                 dialog.dismiss();
             }
         });
-        builder.show();
+        mAlertDialog = builder.create();
+        mAlertDialog.show();
     }
 
 }
