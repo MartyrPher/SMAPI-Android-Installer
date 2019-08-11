@@ -1,5 +1,6 @@
 package com.MartyrPher.smapiandroidinstaller;
 
+import android.nfc.Tag;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -9,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -66,9 +68,19 @@ public class WriteApk {
             }
             for(ZipEntry ze = zin.getNextEntry(); ze != null; ze = zin.getNextEntry()){
                 if(!apkEntryMatch(ze.getName(), files, path)){
-                    //ZipEntry loc_ze = new ZipEntry(ze.getName());
-                    out.putNextEntry(ze);
-                    for(int read = zin.read(buffer); read > -1; read = zin.read(buffer)){
+                    ZipEntry loc_ze = new ZipEntry(ze.getName());
+                    loc_ze.setMethod(ZipEntry.DEFLATED);
+                    if (loc_ze.getName().contains("assemblies") || loc_ze.getName().contains("resources.arsc") || loc_ze.getName().contains("typemap"))
+                    {
+                        loc_ze.setMethod(ZipEntry.STORED);
+                        loc_ze.setSize(ze.getSize());
+                        loc_ze.setCompressedSize(ze.getCompressedSize());
+                        loc_ze.setCrc(ze.getCrc());
+                    }
+                    out.putNextEntry(loc_ze);
+                    ZipFile zipFile = new ZipFile(source);
+                    InputStream stream = zipFile.getInputStream(ze);
+                    for(int read = stream.read(buffer); read > -1; read = stream.read(buffer)){
                         out.write(buffer, 0, read);
                     }
                     out.closeEntry();
