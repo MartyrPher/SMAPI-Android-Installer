@@ -57,7 +57,7 @@ The Automatic Installer seems to be working on most devices. I'm removing the ma
 ## Feeling Generous?
 - Support me via Paypal: [https://www.paypal.me/MartyrPher](https://www.paypal.me/MartyrPher)
 - Support Pathoschild (creator of SMAPI) on [https://smapi.io/](https://smapi.io/)
-- Checkout Monomod (for getting Harmony mods working on Android) on [GitHub](https://github.com/MonoMod/MonoMod)
+- Checkout MonoMod (for getting Harmony mods working on Android) on [GitHub](https://github.com/MonoMod/MonoMod)
 
 ## APK Signing Details
 ![alt text](https://github.com/MartyrPher/SMAPI-Android-Installer/blob/master/current_scheme.PNG)
