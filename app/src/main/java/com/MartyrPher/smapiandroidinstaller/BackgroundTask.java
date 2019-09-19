@@ -14,6 +14,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String ASSET_STARDEW_FILES = "Stardew";
     private static final String MOD_FILES_VK = "VirtualKeyboard";
     private static final String MOD_FILES_VK_ASSET = "VirtualKeyboard/assets";
+    private static final String MOD_FILES_CC = "ConsoleCommands";
     private static final String MIPMAP_XXXHDPI_ASSET = "mipmap-xxxhdpi-v4";
     private static final String MIPMAP_XXHDPI_ASSET = "mipmap-xxhdpi-v4";
     private static final String MIPMAP_XHDPI_ASSET = "mipmap-xhdpi-v4";
@@ -28,6 +29,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String DIR_STARDEW_FILES = "/StardewValley/smapi-internal/";
     private static final String DIR_MODS_VK = "/StardewValley/Mods/VirtualKeyboard/";
     private static final String DIR_MODS_VK_ASSET = "/StardewValley/Mods/VirtualKeyboard/assets";
+    private static final String DIR_MODS_CC = "/StardewValley/Mods/Console Commands/";
 
     private static final String MOD_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/Mods/";
     private static final String STARDEW_VALLEY_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/";
@@ -68,8 +70,8 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
         try
         {
-            extractor.extractAPK();
             publishProgress(9);
+            extractor.extractAPK();
 
             //Creates a save folder if one doesn't exist already
             File saveFolder = new File(STARDEW_VALLEY_DIR);
@@ -97,6 +99,8 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
             copy.copyAssets(MOD_FILES_VK_ASSET, DIR_MODS_VK_ASSET);
             publishProgress(45);
+
+            copy.copyAssets(MOD_FILES_CC, DIR_MODS_CC);
 
             copy.copyAssets(MIPMAP_XXXHDPI_ASSET, DIR_APK_FILES_XXXHDPI);
             copy.copyAssets(MIPMAP_XXHDPI_ASSET, DIR_APK_FILES_XXHDPI);
