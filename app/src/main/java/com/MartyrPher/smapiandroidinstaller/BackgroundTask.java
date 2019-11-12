@@ -7,9 +7,15 @@ import android.util.Log;
 
 import java.io.File;
 
+/**
+ * Handles the background task of creating the new SMAPI APK
+ */
 public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
+    //TAG used for debug purposes
     private static final String TAG = "BackgroundTask";
+
+    //String constants used for file paths
     private static final String ASSET_APK_FILES = "SMAPI";
     private static final String ASSET_STARDEW_FILES = "Stardew";
     private static final String MOD_FILES_VK = "VirtualKeyboard";
@@ -34,12 +40,24 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String MOD_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/Mods/";
     private static final String STARDEW_VALLEY_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/";
 
+    //MainActivity context
     private final Context contextActivity;
 
+    //Instance of ApkInstall
     private ApkInstall apkInstall;
+
+    //Instance of ApkExtractor
     private ApkExtractor extractor;
+
+    //Whether the app is updating
     private boolean updating;
 
+    /**
+     * Constructor that sets the context, apk extractor and whether it's updating
+     * @param context = The activities context
+     * @param apkExtractor = The apk extractor
+     * @param update = Whether the app is updating
+     */
     public BackgroundTask(Context context, ApkExtractor apkExtractor, boolean update)
     {
         this.contextActivity = context;
@@ -47,22 +65,34 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
         this.updating = update;
     }
 
+    /**
+     * Override that gets called before the task gets ran
+     */
     @Override
     protected void onPreExecute()
     {
         super.onPreExecute();
+
+        //The string to show in the dialog
         int dialogString;
         if (updating)
             dialogString = R.string.update_apk;
         else
             dialogString = R.string.modify_apk;
 
+        //Show the dialog
         DialogFrag.showDialog(contextActivity, dialogString, 0);
     }
 
+    /**
+     * Override that does the bulk work
+     * @param voids = The void methods from AsyncTasks
+     * @return true if it completed successfully
+     */
     @Override
     protected Boolean doInBackground(Void... voids)
     {
+        //Create instances of the needed classes
         CopyAssets copy = new CopyAssets(contextActivity);
         WriteApk writeApk = new WriteApk();
         SignApk signApk = new SignApk();
@@ -70,6 +100,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
 
         try
         {
+            //Extract the apk
             publishProgress(9);
             extractor.extractAPK();
 
@@ -88,6 +119,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             if (!noMedia.exists())
                 noMedia.createNewFile();
 
+            //Copies the already provided assets to the needed directory from within the app
             copy.copyAssets(ASSET_APK_FILES, DIR_APK_FILES);
             publishProgress(18);
 
@@ -108,6 +140,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             copy.copyAssets(MIPMAP_MDPI_ASSET, DIR_APK_FILES_MDPI);
             copy.copyAssets(MIPMAP_HDPI_ASSET, DIR_APK_FILES_HDPI);
 
+            //File array that holds all the files that need to go inside the APK
             File[] moddingAPI =
             {
                 new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "AndroidManifest.xml"),
@@ -140,6 +173,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES_HDPI + "ic_launcher_round.png")
             };
 
+            //Boolean array whether the correlating file from moddingAPI array needs to be compressed
             boolean[] compressed =
             {
                 true,
@@ -172,6 +206,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
                 true
             };
 
+            //String array for the path where the files from moddingAPI need to go in the APK
             String[] paths =
             {
                 "",
@@ -205,19 +240,24 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             };
             publishProgress(54);
 
+            //Add the files to the APK
             writeApk.addFilesToApk(new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/" + ApkExtractor.sourceApkFilename), moddingAPI, paths, compressed);
             publishProgress(63);
 
+            //Sign the APK using jar signing
             signApk.commitSignApk();
             publishProgress(81);
 
-
+            //Delete the old files/APK
             File deleteOldApk = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/" + ApkExtractor.sourceApkFilename + "_patched.apk");
             deleteOldApk.delete();
             publishProgress(90);
 
+            //Cleanup other misc files
             deleteApkFiles();
             publishProgress(100);
+
+            //Return true since it completed
             return true;
         }
         catch(Exception e)
@@ -228,9 +268,15 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+    /**
+     * Override that provides progress updates to get a progress bar in the dialog
+     * @param values = Integer values that rate to the current progress
+     */
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
+
+        //Show a fun little message when the progress reaches a certain point
         int message;
         switch(values[0])
         {
@@ -262,17 +308,25 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
         DialogFrag.updateProgressBar(values[0], message);
     }
 
+    /**
+     * Override that gets called after the task finishes
+     * @param aBoolean = Whether the task was successful
+     */
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         if (aBoolean)
         {
+            //Dismiss the dialog and install the new APK
             DialogFrag.dismissDialog();
             apkInstall.installNewStardew();
         }
     }
 
-    //This is super wack but I'm on a time crunch and can probably do this in one nested FOR loop...
+    /**
+     * Delete all the files associated with changing the app icon
+     * This is super wack, this can be done better
+     */
     private void deleteApkFiles()
     {
         File filesToDelete = new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES);
