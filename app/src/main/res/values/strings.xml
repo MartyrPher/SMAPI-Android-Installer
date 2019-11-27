@@ -16,5 +16,6 @@
     <string name="install_squid_ocean">Grabbing squids from the ocean...</string>
     <string name="install_dino_egg">Digging for dino eggs...</string>
     <string name="install_rock_crab">That rock was a crab!?...</string>
+    <string name="stardew_14_warning">"WARNING: many mod updates are for Stardew Valley 1.4, which is not available on Android yet. Make sure to back up the previous mod version before attempting to install updates.</string>
     <string name="blank"> </string>
 </resources>
