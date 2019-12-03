@@ -85,6 +85,11 @@ public class ConfigEditorFragment extends Fragment {
     private void getModFiles()
     {
         File modFolder = new File(MOD_DIR);
+
+        //Make the directory in case it's not there
+        if (!modFolder.exists())
+            modFolder.mkdir();
+
         for (File file : modFolder.listFiles())
         {
             recursiveFileCheck(file);

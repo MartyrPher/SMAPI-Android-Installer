@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.view_pager);
 
+            //Request the permissions for storage first.
+            requestPermissions();
+
             //Find the ViewPager and TabLayout ids
             mViewPager = findViewById(R.id.view_pager);
             mTabLayout = findViewById(R.id.tab_layout);
@@ -64,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
             //Setup the ViewPager adapter and TabLayout with ViewPager
             mViewPager.setAdapter(mTabAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
-
-            //Request the permissions for storage access
-            requestPermissions();
         }
         catch (Exception e)
         {
