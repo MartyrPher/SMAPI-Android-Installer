@@ -10,10 +10,11 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/stardewLightTan"
         android:minHeight="?actionBarSize"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabSelectedTextColor="@android:color/background_light">
+        app:tabIndicatorColor="@color/stardewDarkTan"
+        app:tabSelectedTextColor="@color/stardewText"
+        app:tabTextColor="@color/stardewDarkTan">
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager

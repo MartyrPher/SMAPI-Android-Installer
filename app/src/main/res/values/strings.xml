@@ -6,7 +6,7 @@
     <string name="finished">Finished!</string>
     <string name="install">Error in opening file!</string>
     <string name="permission">Permission Granted</string>
-    <string name="notes">Notes: Game version 1.331 is required.</string>
+    <string name="notes">Notes: Game version 1.4.4.122 is required.</string>
     <string name="base_game_required">The base game is required when updating/installing.</string>
     <string name="installing_pufferchicks">Installing pufferchicks...</string>
     <string name="install_milk_cows">Milking the cows...</string>
@@ -17,5 +17,8 @@
     <string name="install_dino_egg">Digging for dino eggs...</string>
     <string name="install_rock_crab">That rock was a crab!?...</string>
     <string name="stardew_14_warning">"WARNING: many mod updates are for Stardew Valley 1.4, which is not available on Android yet. Make sure to back up the previous mod version before attempting to install updates.</string>
+    <string name="github_message">The GitHub button leads to the latest release download page.</string>
+    <string name="mod_compat_message">The Compat button leads to SMAPI\'s Mod Compatibility page.</string>
+    <string name="nexus_message">The Nexus button leads to Stardew Valley\'s Nexus page.</string>
     <string name="blank"> </string>
 </resources>

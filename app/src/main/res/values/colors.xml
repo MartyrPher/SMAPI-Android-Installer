@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#d81b60</color>
     <color name="colorBackground">#01AEEF</color>
+    <color name="stardewLightTan">#FFd284</color>
+    <color name="stardewDarkTan">#b14e05</color>
+    <color name="stardewText">#221122</color>
 </resources>

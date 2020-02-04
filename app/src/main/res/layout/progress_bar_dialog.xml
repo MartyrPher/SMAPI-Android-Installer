@@ -2,24 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/stardew_14_warning"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp"
-        android:textStyle="bold"/>
+    android:layout_height="wrap_content"
+    android:background="@drawable/text_box">
 
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:progressTint="@color/stardewDarkTan"/>
 
     <TextView
         android:id="@+id/install_message"
@@ -30,7 +21,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="4dp"
         android:text=""
-        android:textColor="@android:color/black" />
+        android:textColor="@color/stardewText" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -40,5 +31,6 @@
         android:layout_marginTop="0dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:progressTint="@color/stardewDarkTan"/>
 </LinearLayout>
