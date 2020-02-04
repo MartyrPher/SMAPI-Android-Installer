@@ -52,21 +52,7 @@ public class MainActivity extends AppCompatActivity {
             //Request the permissions for storage first.
             requestPermissions();
 
-            //Find the ViewPager and TabLayout ids
-            mViewPager = findViewById(R.id.view_pager);
-            mTabLayout = findViewById(R.id.tab_layout);
 
-            //Get the fragment manager and add the fragments
-            mTabAdapter = new TabAdapter(getSupportFragmentManager());
-            if (mTabAdapter.getCount() < 1)
-            {
-                mTabAdapter.addFragment(new InstallFragment(), "Install");
-                mTabAdapter.addFragment(new ConfigEditorFragment(), "Configs");
-            }
-
-            //Setup the ViewPager adapter and TabLayout with ViewPager
-            mViewPager.setAdapter(mTabAdapter);
-            mTabLayout.setupWithViewPager(mViewPager);
         }
         catch (Exception e)
         {
@@ -84,6 +70,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setUpView()
+    {
+        File stardewValleyFolder = new File(Environment.getExternalStorageDirectory() + "/StardewValley");
+        try
+        {
+            if (!stardewValleyFolder.exists())
+                stardewValleyFolder.mkdir();
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(this, "Could not create StardewValley folder", Toast.LENGTH_LONG).show();
+        }
+
+        //Find the ViewPager and TabLayout ids
+        mViewPager = findViewById(R.id.view_pager);
+        mTabLayout = findViewById(R.id.tab_layout);
+
+        //Get the fragment manager and add the fragments
+        mTabAdapter = new TabAdapter(getSupportFragmentManager());
+        if (mTabAdapter.getCount() < 1 && mHasPermissions)
+        {
+            mTabAdapter.addFragment(new InstallFragment(), "Install");
+            mTabAdapter.addFragment(new ConfigEditorFragment(), "Configs");
+            mTabAdapter.addFragment(new GitHubFragment(), "Links");
+        }
+
+        //Setup the ViewPager adapter and TabLayout with ViewPager
+        mViewPager.setAdapter(mTabAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
     /**
      * Request permissions to be able to read/write external storage
      */
@@ -98,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             mHasPermissions = true;
+            setUpView();
         }
     }
 
@@ -115,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
                     mHasPermissions = true;
+                    setUpView();
                     Toast.makeText(this, R.string.permission, Toast.LENGTH_SHORT).show();
                 }
                 break;
