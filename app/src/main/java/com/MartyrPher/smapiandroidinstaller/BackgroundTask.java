@@ -18,9 +18,11 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
     //String constants used for file paths
     private static final String ASSET_APK_FILES = "SMAPI";
     private static final String ASSET_STARDEW_FILES = "Stardew";
+    private static final String ASSET_STARDEW_TRANSLATIONS = "Stardew/i18n";
     private static final String MOD_FILES_VK = "VirtualKeyboard";
     private static final String MOD_FILES_VK_ASSET = "VirtualKeyboard/assets";
     private static final String MOD_FILES_CC = "ConsoleCommands";
+    private static final String MOD_FILES_SB = "SaveBackup";
     private static final String MIPMAP_XXXHDPI_ASSET = "mipmap-xxxhdpi-v4";
     private static final String MIPMAP_XXHDPI_ASSET = "mipmap-xxhdpi-v4";
     private static final String MIPMAP_XHDPI_ASSET = "mipmap-xhdpi-v4";
@@ -33,9 +35,11 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String DIR_APK_FILES_MDPI = "/SMAPI Installer/ApkFiles/mipmap-mdpi/";
     private static final String DIR_APK_FILES_HDPI = "/SMAPI Installer/ApkFiles/mipmap-hdpi/";
     private static final String DIR_STARDEW_FILES = "/StardewValley/smapi-internal/";
+    private static final String DIR_STARDEW_TRANSLATIONS = "/StardewValley/smapi-internal/i18n/";
     private static final String DIR_MODS_VK = "/StardewValley/Mods/VirtualKeyboard/";
     private static final String DIR_MODS_VK_ASSET = "/StardewValley/Mods/VirtualKeyboard/assets";
     private static final String DIR_MODS_CC = "/StardewValley/Mods/Console Commands/";
+    private static final String DIR_MODS_SB = "/StardewValley/Mods/SaveBackup/";
 
     private static final String MOD_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/Mods/";
     private static final String STARDEW_VALLEY_DIR = Environment.getExternalStorageDirectory() + "/StardewValley/";
@@ -124,6 +128,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             publishProgress(18);
 
             copy.copyAssets(ASSET_STARDEW_FILES, DIR_STARDEW_FILES);
+            copy.copyAssets(ASSET_STARDEW_TRANSLATIONS, DIR_STARDEW_TRANSLATIONS);
             publishProgress(27);
 
             copy.copyAssets(MOD_FILES_VK, DIR_MODS_VK);
@@ -133,6 +138,7 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
             publishProgress(45);
 
             copy.copyAssets(MOD_FILES_CC, DIR_MODS_CC);
+            copy.copyAssets(MOD_FILES_SB, DIR_MODS_SB);
 
             copy.copyAssets(MIPMAP_XXXHDPI_ASSET, DIR_APK_FILES_XXXHDPI);
             copy.copyAssets(MIPMAP_XXHDPI_ASSET, DIR_APK_FILES_XXHDPI);
@@ -146,8 +152,8 @@ public class BackgroundTask extends AsyncTask<Void, Integer, Boolean> {
                 new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "AndroidManifest.xml"),
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "classes.dex"),
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "StardewModdingAPI.dll"),
-                new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "StardewModdingAPI.Toolkit.CoreInterfaces.dll"),
-                new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "StardewModdingAPI.Toolkit.dll"),
+                new File(Environment.getExternalStorageDirectory() + DIR_APK_FILES + "SMAPI.Toolkit.CoreInterfaces.dll"),
+                new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "SMAPI.Toolkit.dll"),
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "Newtonsoft.json.dll"),
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "System.Data.dll"),
                 new File( Environment.getExternalStorageDirectory() + DIR_APK_FILES + "System.Numerics.dll"),
