@@ -63,12 +63,12 @@ public class ConfigAdapter extends RecyclerView.Adapter<ConfigAdapter.ConfigView
     {
         //Inflate the view
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.text_view, parent, false);
+                .inflate(R.layout.config_view, parent, false);
 
         //Create a new ConfigViewHolder
         final ConfigViewHolder configViewHolder = new ConfigViewHolder(view);
 
-        //Set an onClickListner for each of the config options
+        //Set an onClickListener for each of the config options
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){

@@ -114,12 +114,6 @@ public class WriteApk {
         }
     }
 
-    /***********************************************************************************
-    |   Check if the current entry matches a file that needs to be placed in the APK
-    |    zeName = The ZipEntry Name
-    |    files = The files that are being checked
-    |    path = The path that is being checked
-    ***********************************************************************************/
     /**
      * Check if the current entry matches a file that needs to be placed in the APK
      * @param zeName = The ZipEntry Name
