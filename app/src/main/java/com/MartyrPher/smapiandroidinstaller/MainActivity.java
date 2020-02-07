@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
         mTabAdapter = new TabAdapter(getSupportFragmentManager());
         if (mTabAdapter.getCount() < 1 && mHasPermissions)
         {
-            mTabAdapter.addFragment(new InstallFragment(), "Install");
-            mTabAdapter.addFragment(new ConfigEditorFragment(), "Configs");
-            mTabAdapter.addFragment(new GitHubFragment(), "Links");
+            mTabAdapter.addFragment(new InstallFragment(), this.getString(R.string.install_button_text));
+            mTabAdapter.addFragment(new ConfigEditorFragment(), this.getString(R.string.config_tab_text));
+            mTabAdapter.addFragment(new GitHubFragment(), this.getString(R.string.links_tab_text));
         }
 
         //Setup the ViewPager adapter and TabLayout with ViewPager
