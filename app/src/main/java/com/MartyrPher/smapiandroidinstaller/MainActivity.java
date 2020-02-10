@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Request the permissions for storage first.
             requestPermissions();
-
-
         }
         catch (Exception e)
         {
