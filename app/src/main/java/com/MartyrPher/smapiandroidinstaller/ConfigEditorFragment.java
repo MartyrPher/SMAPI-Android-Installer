@@ -2,11 +2,11 @@ package com.MartyrPher.smapiandroidinstaller;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +49,14 @@ public class ConfigEditorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        //Inflate the fragment layout
-        return inflater.inflate(R.layout.config_editing, container, false);
+        try {
+            //Inflate the fragment layout
+            return inflater.inflate(R.layout.config_editing, container, false);
+        }
+        catch (Exception e) {
+            MainActivity.writeToCrashLog(e);
+            return null;
+        }
     }
 
     /**
@@ -61,22 +67,27 @@ public class ConfigEditorFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        //Find the Recycler View and set the hasFixedSize
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(false);
+        try {
+            //Find the Recycler View and set the hasFixedSize
+            mRecyclerView = view.findViewById(R.id.recycler_view);
+            mRecyclerView.setHasFixedSize(false);
 
-        //Create a new Layout Manager and set Recyclers View layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+            //Create a new Layout Manager and set Recyclers View layout manager
+            mLayoutManager = new LinearLayoutManager(getActivity());
+            mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //Only grab the mod file list once
-        //Not having this allows duplicate mods to show (Thanks Minerva!!!)
-        if (!MainActivity.mHasFoundMods)
-            getModFiles();
+            //Only grab the mod file list once
+            //Not having this allows duplicate mods to show (Thanks Minerva!!!)
+            if (!MainActivity.mHasFoundMods)
+                getModFiles();
 
-        //Create a new Config Adapter and set Recycle Views adapter to the new adapter
-        mAdapter = new ConfigAdapter(mModFiles);
-        mRecyclerView.setAdapter(mAdapter);
+            //Create a new Config Adapter and set Recycle Views adapter to the new adapter
+            mAdapter = new ConfigAdapter(mModFiles);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+        catch (Exception e) {
+            MainActivity.writeToCrashLog(e);
+        }
     }
 
     /**

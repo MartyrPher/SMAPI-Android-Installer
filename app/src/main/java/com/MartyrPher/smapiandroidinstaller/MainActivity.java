@@ -3,18 +3,20 @@ package com.MartyrPher.smapiandroidinstaller;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,23 +56,16 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            //Try to log a crash in onCreate()
-            File logFile = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/crash.txt");
-            try {
-                FileOutputStream stream = new FileOutputStream(logFile);
-                stream.write(e.getMessage().getBytes());
-                stream.close();
-            }
-            catch(Exception er)
-            {
-                Log.e(TAG, er.toString());
-            }
+            writeToCrashLog(e);
         }
     }
 
+    /**
+     * Sets up the view after the app has the needed permissions.
+     */
     private void setUpView()
     {
-        File stardewValleyFolder = new File(Environment.getExternalStorageDirectory() + "/StardewValley");
+        File stardewValleyFolder = new File(Environment.getExternalStorageDirectory() + "/StardewValley/");
         try
         {
             if (!stardewValleyFolder.exists())
@@ -78,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(Exception e)
         {
-            Toast.makeText(this, "Could not create StardewValley folder", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Could not create Stardew Valley folder", Toast.LENGTH_LONG).show();
         }
 
         //Find the ViewPager and TabLayout ids
@@ -97,6 +92,35 @@ public class MainActivity extends AppCompatActivity {
         //Setup the ViewPager adapter and TabLayout with ViewPager
         mViewPager.setAdapter(mTabAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    /**
+     * Writes to a text file if the app crashes.
+     * @param e = The exception to be written to the log.
+     */
+    public static void writeToCrashLog(Exception e)
+    {
+        //Try to log a crash
+        File smapiInstallerFolder = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/");
+        File logFile = new File(Environment.getExternalStorageDirectory() + "/SMAPI Installer/crash.txt");
+
+        if (!mHasPermissions)
+            return;
+
+        if (!smapiInstallerFolder.exists())
+            smapiInstallerFolder.mkdir();
+
+        try {
+            FileOutputStream stream = new FileOutputStream(logFile);
+            StringWriter stringWriter = new StringWriter();
+            e.printStackTrace(new PrintWriter(stringWriter));
+            String stackTrace = stringWriter.toString();
+            stream.write(stackTrace.getBytes());
+            stream.close();
+        }
+        catch(Exception er) {
+            Log.e(TAG, er.toString());
+        }
     }
 
     /**
