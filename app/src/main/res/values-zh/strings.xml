@@ -17,7 +17,7 @@
     <string name="install_squid_ocean">正在下海挖大鱿鱼...</string>
     <string name="install_dino_egg">正在挖恐龙蛋...</string>
     <string name="install_rock_crab">那石头是个岩石蟹!?...</string>
-    <string name="stardew_14_warning">"WARNING: many mod updates are for Stardew Valley 1.4, which is not available on Android yet. Make sure to back up the previous mod version before attempting to install updates.</string>
+    <string name="stardew_14_warning">"警告: 许多Mod更新适用于Stardew Valley 1.4，但Android尚不可用. 在尝试安装更新之前,请确保备份以前的mod版本.</string>
     <string name="github_message">GitHub按钮会跳转到最新的发行版下载网页</string>
     <string name="mod_compat_message">Compat按钮会跳转到Mod兼容性网页</string>
     <string name="nexus_message">Nexus按钮会跳转到Nexus的星露谷物语分区网页.</string>
