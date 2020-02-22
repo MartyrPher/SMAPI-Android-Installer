@@ -7,7 +7,7 @@
     <string name="finished">Finalizado!</string>
     <string name="install">Error al abrir el archivo!</string>
     <string name="permission">Permiso Garantizado</string>
-    <string name="notes">Notas: La versión 1.4.5.137 del juego es requerida.</string>
+    <string name="notes">Notas: La versión 1.4.5.139 del juego es requerida.</string>
     <string name="base_game_required">El juego base es requerido al actualizar/instalar.</string>
     <string name="installing_pufferchicks">Instalando pufferchicks...</string>
     <string name="install_milk_cows">Ordeñando vacas...</string>
@@ -19,7 +19,7 @@
     <string name="install_rock_crab">Esa roca era un cangrejo!?...</string>
     <string name="stardew_14_warning">"ADVERTENCIA: Algunas actualizaciones de mod son para Stardew Valley 1.4, que no esta disponible en Android aun. Asegurese de guardar la versión de mod que utiliza, antes de descargar las actualizaciones.</string>
     <string name="github_message">El botón de GitHub lleva a la página de descarga de la ultima versión.</string>
-    <string name="mod_compat_message">El botón de GitHub lleva a la página de descarga de la ultima versión.</string>
+    <string name="mod_compat_message">El botón Compat lleva a la página de mods compatibles con SMAPI.</string>
     <string name="nexus_message">El botón Nexus lleva a la página Nexus de Stardew Valley.</string>
     <string name="blank"> </string>
     <string name="install_button_text">Instalar</string>
