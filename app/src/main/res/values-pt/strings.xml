@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SMAPI Android Installer</string>
+    <string name="cant_find">Não foi possivel encontrar o apk de Stardew Valley. O jogo está instalado?</string>
+    <string name="modify_apk">Modificando o apk… isso pode levar um tempo. Por favor deixe a sua tela ligada.</string>
+    <string name="update_apk">Atualizando o Apk… isso pode levar um tempo. Por favor deixe a sua tela ligada.</string>
+    <string name="finished">Finalizado!</string>
+    <string name="install">Erro ao abrir o arquivo!</string>
+    <string name="permission">Permissão Garantida</string>
+    <string name="notes">Notas: Versão do jogo 1.4.5.139 é necessária.</string>
+    <string name="base_game_required">O jogo base é necessário quando instalando/atualizando.</string>
+    <string name="installing_pufferchicks">Instalando pufferchicks...</string>
+    <string name="install_milk_cows">Ordenhando as vacas...</string>
+    <string name="install_ancient_fruit">Plantando fruta antiga...</string>
+    <string name="install_abigail_rocks">Alimentando a rocha da Abigail...</string>
+    <string name="install_feeding_juminos">Pulando com os junimos...</string>
+    <string name="install_squid_ocean">Pegando conchas na praia...</string>
+    <string name="install_dino_egg">Escavando por ovos de dino...</string>
+    <string name="install_rock_crab">Aquela pedra era um siri!?...</string>
+    <string name="stardew_14_warning">"AVISO: a maioria das atualizações de mods são pra 1.4, qual ainda não está no Android. Tenha certeza de salvar seus mods antes de tentar instalar as autalizações.</string>
+    <string name="github_message">O botão Github leva a página de download mais recente.</string>
+    <string name="mod_compat_message">O botão Compat leva ao site de compatibilidade de mods do SMAPI.</string>
+    <string name="nexus_message">O botão Nexus leva a página do Stardew na Nexus.</string>
+    <string name="blank"> </string>
+    <string name="install_button_text">Instalar</string>
+    <string name="install_tab_text">Instalar</string>
+    <string name="config_tab_text">Configurações</string>
+    <string name="links_tab_text">Links</string>
+</resources>
