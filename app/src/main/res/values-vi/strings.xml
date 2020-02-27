@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SMAPI Android Installer</string>
+    <string name="cant_find">Không thể tìm thấy Stardew Valley Apk. Bạn đã cài game chưa?</string>
+    <string name="modify_apk">Đang sửa đổi Apk… sẽ tốn một chút thời gian. Xin vui lòng giữ màn hình luôn bật.</string>
+    <string name="update_apk">Đang cập nhật Apk… sẽ tốn một chút thời gian. Xin vui lòng giữ màn hình luôn bật.</string>
+    <string name="finished">Kết thúc!</string>
+    <string name="install">Lỗi khi mở file!</string>
+    <string name="permission">Đã được cấp quyền!</string>
+    <string name="notes">Chú ý: Yêu cầu game phiên bản 1.4.5.139 trở lên.</string>
+    <string name="base_game_required">Cần có phiên bản gốc của game khi Cập nhật/Cài đặt.</string>
+    <string name="installing_pufferchicks">Đang cài pufferchicks...</string>
+    <string name="install_milk_cows">Đang vắt sữa bò...</string>
+    <string name="install_ancient_fruit">Đang trồng cây cổ đại...</string>
+    <string name="install_abigail_rocks">Đang cho Abigail ăn đá...</string>
+    <string name="install_feeding_juminos">Đang nhảy cùng Junimos...</string>
+    <string name="install_squid_ocean">Đang bắt mực ngoài biển...</string>
+    <string name="install_dino_egg">Đang đào trứng khủng long...</string>
+    <string name="install_rock_crab">Hòn đá kia là một con cua!?...</string>
+    <string name="stardew_14_warning">"Cảnh báo: Một số mod được cập nhật cho Stardew Valley 1.4 vẫn chưa có sẵn cho Android. Hãy chắn chắn rằng bạn đã sao lưu lưu lại phiên bản mod cũ trước khi cài đặt bản cập nhật này.</string>
+    <string name="github_message">Nút GITHUB sẽ dẫn đến trang tải phiên bản mới nhất.</string>
+    <string name="mod_compat_message">Nút COMPAT dẫn đến trang có các mod tương thích với SMAPI.</string>
+    <string name="nexus_message">Nút NEXUS sẽ dẫn đến trang Stardew Valley của Nexus.</string>
+    <string name="blank"> </string>
+    <string name="install_button_text">Cài đặt</string>
+    <string name="install_tab_text">Cài Đặt</string>
+    <string name="config_tab_text">Cấu Hình</string>
+    <string name="links_tab_text">Liên Kết</string>
+</resources>
